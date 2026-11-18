@@ -175,3 +175,5 @@ Complete the TODOs in `GameController.cs`:
 ## Homework (slide 43)
 
 Group assignment: build on this game, or propose a new simple 2D game. Add at least one new UI element and a `SceneManager` scene change (for example Menu → Game). Submit a PDF with a demo video and the GitHub URL.
+#   L a b 0 5 _ R o c k _ P a p e r _ S c i s s o r _ G r o u p 5  
+ 
