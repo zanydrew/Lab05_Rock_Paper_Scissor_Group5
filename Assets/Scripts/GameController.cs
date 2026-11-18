@@ -26,7 +26,18 @@ public class GameController : MonoBehaviour
         // imgYou = GameObject.Find("ImgYou").GetComponent<Image>();
         // Also find: ImgCom, TxtYou, TxtCom, TxtResult_
 
+        imgYou = GameObject.Find("ImgYou").GetComponent<Image>();
+        imgCom = GameObject.Find("ImgCom").GetComponent<Image>();
+        txtYou = GameObject.Find("TxtYou").GetComponent<Text>();
+        txtCom = GameObject.Find("TxtCom").GetComponent<Text>();
+        txtResult = GameObject.Find("TxtResult_").GetComponent<Text>();
+
+
         // TODO: set the text of txtResult to "Select the button below"
+
+        txtResult.text = "Select the button below";
+        txtYou.text = "0";
+        txtCom.text = "0";
     }
 
     void Start()
@@ -36,14 +47,14 @@ public class GameController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        // exit if press escape key
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-    }
+    // void Update()
+    // {
+    //     // exit if press escape key
+    //     if (Input.GetKeyDown(KeyCode.Escape))
+    //     {
+    //         Application.Quit();
+    //     }
+    // }
 
     // Slides 24-31: link this function to the On Click () event of every button.
     // Pass the button itself as the GameObject parameter.
@@ -52,11 +63,11 @@ public class GameController : MonoBehaviour
         Debug.Log(buttonObject.name + " clicked ");
 
         // TODO (slide 34): get the number from the first character of the button name
-        // int you = int.Parse(buttonObject.name.Substring(0, 1));
-        // CheckResult(you);
+        int you = int.Parse(buttonObject.name.Substring(0, 1));
+        CheckResult(you);
     }
 
-    void CheckResult(int yourResult)
+    void CheckResult(int you)
     {
         // TODO (slide 33): game logic
         // 1. com = random number 1..3  ->  UnityEngine.Random.Range(1, 4)
@@ -65,7 +76,26 @@ public class GameController : MonoBehaviour
         //    k == 1 or k == -2   -> "You win."       (cntYou++)
         //    otherwise           -> "Computer win."  (cntCom++)
         // 4. call SetResult(yourResult, comResult)
-        Debug.Log("Your result is: " + yourResult);
+        // Debug.Log("Your result is: " + yourResult);
+
+        int com = Random.Range(1, 4);
+        int k = you - com;
+
+        if (k == 0)
+        {
+            txtResult.text = "It's a tie";
+        }
+        else if (k == 1 || k == -2)
+        {
+            txtResult.text = "Player Wins";
+            cntYou++;
+        }
+        else
+        {
+            txtResult.text = "Computer Wins";
+            cntCom++;
+        }
+        SetResult(you, com);
     }
 
     void SetResult(int you, int com)
@@ -73,7 +103,12 @@ public class GameController : MonoBehaviour
         // TODO (slide 41):
         // 1. change imgYou.sprite and imgCom.sprite
         //    Resources.Load("img_" + you, typeof(Sprite)) as Sprite
+        imgYou.sprite = Resources.Load<Sprite>("img_" + you);
+        imgCom.sprite = Resources.Load<Sprite>("img_" + com);
         // 2. flip the computer image on the x axis: localScale = (-1, 1, 1)
+        imgCom.rectTransform.localScale = new Vector3(-1, 1, 1);
         // 3. update txtYou.text and txtCom.text with the scores
+        txtYou.text = cntYou.ToString();
+        txtCom.text = cntCom.ToString();
     }
 }
